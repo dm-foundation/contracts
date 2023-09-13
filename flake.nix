@@ -41,10 +41,7 @@
         '';
       };
       packages = {
-        test = let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-          pkgs.stdenv.mkDerivation {
+        test =           pkgs.stdenv.mkDerivation {
             inherit buildInputs;
             name = "DMP contracts";
 
