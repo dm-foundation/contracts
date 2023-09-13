@@ -41,24 +41,24 @@
         '';
       };
       packages = {
-        test =           pkgs.stdenv.mkDerivation {
-            inherit buildInputs;
-            name = "DMP contracts";
+        test = pkgs.stdenv.mkDerivation {
+          inherit buildInputs;
+          name = "DMP contracts";
 
-            unpackPhase = ":";
+          unpackPhase = ":";
 
-            buildPhase = ''
-              forge compile --no-auto-detect
-            '';
+          buildPhase = ''
+            forge compile --no-auto-detect
+          '';
 
-            checkPhase = ''
-              forge test --no-auto-detect
-            '';
+          checkPhase = ''
+            forge test --no-auto-detect
+          '';
 
-            installPhase = "mkdir -p $out/bin";
+          installPhase = ":";
 
-            doCheck = true;
-          };
+          doCheck = true;
+        };
       };
     });
 }
