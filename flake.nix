@@ -39,5 +39,27 @@
             export PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
           '';
         };
+      packages = {
+        test = let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+          pkgs.stdenv.mkDerivation {
+            name = "DMP contracts";
+
+            unpackPhase = ":";
+
+            buildPhase = ''
+              forge compile --no-auto-detect
+            '';
+
+            checkPhase = ''
+              forge test --no-auto-detect
+            '';
+
+            installPhase = ":";
+
+            doCheck = true;
+          };
+      };
     });
 }

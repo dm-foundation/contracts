@@ -2,7 +2,7 @@ name: test
 run-name: ${{ github.actor }} is running Foundry tests
 on: [push]
 jobs:
-  solidity-tests
+  solidity-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
