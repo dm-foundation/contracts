@@ -1,6 +1,6 @@
 # DMP SMART CONTRACTS
 The smart contracts that implement the Decentralized Market Protocol.
-![](https://gateway.ipfs.io/ipfs/Qme3z12tnesracEShpUF1QG9ZnYwovs1U9vA1sK1PSFhFd)
+
 # OVERVIEW
 - Solidity Documention: https://dm-foundation.github.io/contracts
 - Stack
