@@ -24,14 +24,16 @@
           foundry.overlay
         ];
       };
-    in {
-      devShell = with pkgs;
-        mkShell {
-          buildInputs = [
+
+          buildInputs = with pkgs; [
             # smart contracct dependencies
             foundry-bin
             solc
           ];
+    in {
+      devShell = 
+        pkgs.mkShell {
+          inherit buildInputs;
 
           # Decorative prompt override so we know when we're in a dev shell
           shellHook = ''
@@ -44,6 +46,7 @@
           pkgs = nixpkgs.legacyPackages.${system};
         in
           pkgs.stdenv.mkDerivation {
+            inherit buildInputs;
             name = "DMP contracts";
 
             unpackPhase = ":";
