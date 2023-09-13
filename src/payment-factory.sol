@@ -158,7 +158,7 @@ contract PaymentFactory {
         }
     }
 
-    /// @title Used by the sweeper contracts to notify the payments contract that it has succesfully sweeped the funds. The payments will then issue a NFT reciept to the buyer.
+    /// @notice Used by the sweeper contracts to notify the payments contract that it has succesfully sweeped the funds. The payments will then issue a NFT reciept to the buyer.
     function markSuccussfulTransfer () public {
         lastPaymentAddress = msg.sender;
     }
