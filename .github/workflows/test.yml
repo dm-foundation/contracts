@@ -2,12 +2,12 @@ name: test
 run-name: ${{ github.actor }} is running Foundry tests
 on: [push]
 jobs:
-  check-bats-version:
+  solidity-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
-      - name: cargo test
+      - name: Foundry test
         run: nix develop -c forge test --no-auto-detect
