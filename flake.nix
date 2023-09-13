@@ -55,7 +55,7 @@
             forge test --no-auto-detect
           '';
 
-          installPhase = ":";
+          installPhase = "mkdir -p $out";
 
           doCheck = true;
         };
