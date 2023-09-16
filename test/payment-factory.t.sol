@@ -18,7 +18,7 @@ contract Payments is Test {
 
     function setUp() public {
         factory = new PaymentFactory();
-        generatedAddress = factory.calcuatePaymentAddress(
+        generatedAddress = factory.getPaymentAddress(
             merchant,
             proof,
             amount,

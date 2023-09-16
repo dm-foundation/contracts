@@ -113,7 +113,7 @@ contract PaymentFactory {
     /// @param currency The address of the ERC20
     /// @param recieptHash The hash of the receipt
     /// @return The payment address
-    function calcuatePaymentAddress(
+    function getPaymentAddress(
         address merchant,
         address proof,
         uint256 amount,
