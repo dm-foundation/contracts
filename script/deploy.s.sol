@@ -9,7 +9,7 @@ contract MyScript is Script {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
 
-        PaymentFactory payments = new PaymentFactory();
+        new PaymentFactory{salt: bytes32(uint256(1))}();
 
         vm.stopBroadcast();
     }

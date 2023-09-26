@@ -21,7 +21,10 @@ Run `nix develop` to enter the devShell.
 
 # DEPLOYMENT
 
-Currently Depolyed at 0xe7ed90d1ef91c23ee8531567419cc5554a4303b6 on Sepolia
+Currently Depolyed
+
+- Sepolia `0xe7ed90d1ef91c23ee8531567419cc5554a4303b6`
+- Mainnet `0x200eE24fd0d1a88E3b83dE1dA10B413963e1B2Ea`
 
 # LICENSE
 
