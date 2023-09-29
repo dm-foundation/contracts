@@ -110,7 +110,7 @@ contract PaymentFactory {
     /// @param merchant The merchant's address which the funds get sent to
     /// @param proof The address that the receipt or the refund will be sent to
     /// @param amount The amount the customer is paying
-    /// @param currency The address of the ERC20
+    /// @param currency The address of the ERC20 that is being used as payement. If that currency is Ether then use zero address `0x0000000000000000000000000000000000000000`.
     /// @param recieptHash The hash of the receipt
     /// @return The payment address
     function getPaymentAddress(
