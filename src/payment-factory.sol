@@ -137,7 +137,12 @@ contract PaymentFactory {
     }
 
 
-    /// @dev Calulates the payament address given the following parameters
+    /// @notice Given the parameters used to generate a payement address, this function will forward the payment to the merchant's address.
+    /// @param merchant The merchant's address which the funds get sent to
+    /// @param proof The address that the receipt or the refund will be sent to
+    /// @param amount The amount the customer is paying
+    /// @param currency The address of the ERC20 that is being used as payement. If that currency is Ether then use zero address `0x0000000000000000000000000000000000000000`.
+    /// @param recieptHash The hash of the receipt
     function processPayment(
         address payable merchant,
         address payable proof,
@@ -164,6 +169,12 @@ contract PaymentFactory {
         lastPaymentAddress = msg.sender;
     }
 
+    /// @notice this does a batched call to `processPayment`
+    /// @param merchant The merchant's address which the funds get sent to
+    /// @param proof The address that the receipt or the refund will be sent to
+    /// @param amount The amount the customer is paying
+    /// @param currency The address of the ERC20 that is being used as payement. If that currency is Ether then use zero address `0x0000000000000000000000000000000000000000`.
+    /// @param recieptHash The hash of the receipt
     function batch(
         address payable[] calldata merchants,
         address payable[] calldata proofs,
