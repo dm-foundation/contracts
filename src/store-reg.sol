@@ -1,16 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.21;
 
 import "openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "openzeppelin-contracts/contracts/utils/Strings.sol";
 import "openzeppelin-contracts/contracts/access/Ownable.sol";
-import "openzeppelin-contracts/contracts/utils/Counters.sol";
+import "delegatable-sol/contracts/Delegatable.sol";
+
 
 contract Store is ERC721Enumerable {
-    using Counters for Counters.Counter;
-    using Strings for uint256;
-
-    Counters.Counter private _tokenIdCounter;
     string public baseURI;
     mapping(uint256 => bytes32) public storeRootHash;
 

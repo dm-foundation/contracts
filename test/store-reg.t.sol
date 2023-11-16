@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.21;
 
 import "forge-std/Test.sol";
+import "openzeppelin-contracts/contracts/token/ERC721/IERC721Receiver.sol";
 import "../src/store-reg.sol";
 
 contract StoreTest is Test {
@@ -80,7 +81,7 @@ contract Receiver is IERC721Receiver {
         address from,
         uint256 id,
         bytes calldata data
-    ) external override returns (bytes4) {
+    ) external override pure returns (bytes4) {
         return this.onERC721Received.selector;
     }
 }

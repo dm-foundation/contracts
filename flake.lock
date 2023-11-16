@@ -21,32 +21,16 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1694855347,
-        "narHash": "sha256-e00Y1S2SsBzQKb+imMf1astgE2/xzJ2R8Y3RLtbyLt0=",
+        "lastModified": 1700212163,
+        "narHash": "sha256-kzX+xSdEpFygE1Cc5D9st0ULlsJ6Q+dmJWZH+NhyOkk=",
         "owner": "shazow",
         "repo": "foundry.nix",
-        "rev": "da35cfd29c4922f4f9e6f4683912b33d5aaff8a6",
+        "rev": "25dd5506c02378b85cc66c1cc0fac99bd4d4def2",
         "type": "github"
       },
       "original": {
         "owner": "shazow",
         "repo": "foundry.nix",
-        "type": "github"
-      }
-    },
-    "muKnIOpkgs": {
-      "locked": {
-        "lastModified": 1679258598,
-        "narHash": "sha256-K7NEmh+w9FuM4HtxjF8NAIBQ8lRl4Z0Q4uCW90g+yxo=",
-        "owner": "MuKnIO",
-        "repo": "nixpkgs",
-        "rev": "9a6927820e5122bf1cba6a10eca4358a7049a71f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "MuKnIO",
-        "ref": "solc",
-        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -66,24 +50,22 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1694760568,
-        "narHash": "sha256-3G07BiXrp2YQKxdcdms22MUx6spc6A++MSePtatCYuI=",
+        "lastModified": 1700108881,
+        "narHash": "sha256-+Lqybl8kj0+nD/IlAWPPG/RDTa47gff9nbei0u7BntE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "46688f8eb5cd6f1298d873d4d2b9cf245e09e88e",
+        "rev": "7414e9ee0b3e9903c24d3379f577a417f0aae5f1",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
+        "id": "nixpkgs",
         "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
+        "type": "indirect"
       }
     },
     "root": {
       "inputs": {
         "foundry": "foundry",
-        "muKnIOpkgs": "muKnIOpkgs",
         "nixpkgs": "nixpkgs_2",
         "utils": "utils"
       }

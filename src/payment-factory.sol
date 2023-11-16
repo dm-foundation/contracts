@@ -1,26 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.19;
-import "openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
+pragma solidity ^0.8.21;
 import "openzeppelin-contracts/contracts/token/ERC20/ERC20.sol";
-
-/// @title an ERC721 instance used for storing receipts from purchases
-/// @dev this is does more then it needs to. We only need to store a mapping of owner=>Array(reciepts).
-/// and we don't need a full ECR721 implemention. There should be seperate mechinism that allows a user
-/// to redem an NFT for a giving listing that existed in their reciept.
-contract NFTReceipt is ERC721 {
-    address owner = msg.sender;
-    mapping(uint256 => bytes32) public receipts;
-    constructor() ERC721("MassItem", "MT") {}
-    function mint(address nftOwner, uint256 id, bytes32 receipt) public {
-        require(owner == msg.sender);
-        _mint(nftOwner, id);
-        receipts[id] = receipt;
-    }
-    function burn(uint256 id) public {
-        require(owner == msg.sender);
-        _burn(id);
-    }
-}
 
 /// @title Sweeps ERC20's from the payment address to the merchants address
 contract SweepERC20Payment {
@@ -44,7 +24,6 @@ contract SweepERC20Payment {
             }
             // pay the mechant
             erc20.transfer(merchant, amount);
-            PaymentFactory(msg.sender).markSuccussfulTransfer();
         }
         // need to prevent solidity from returning code
         assembly {
@@ -75,7 +54,6 @@ contract SweepEtherPayment {
             }
             // pay the mechant
             merchant.transfer(amount);
-            PaymentFactory(msg.sender).markSuccussfulTransfer();
         }
         // need to prevent solidity from returning code
         assembly {
@@ -86,7 +64,6 @@ contract SweepEtherPayment {
 
 /// @title Provides functions around payments addresses
 contract PaymentFactory {
-    NFTReceipt Receipt = new NFTReceipt();
     address lastPaymentAddress;
 
     function getBytecode(
@@ -111,7 +88,7 @@ contract PaymentFactory {
     /// @param proof The address that the receipt or the refund will be sent to
     /// @param amount The amount the customer is paying
     /// @param currency The address of the ERC20 that is being used as payement. If that currency is Ether then use zero address `0x0000000000000000000000000000000000000000`.
-    /// @param recieptHash The hash of the receipt
+    /// @param recieptHash The hash of the receipt used as salt for CREATE2
     /// @return The payment address
     function getPaymentAddress(
         address merchant,
@@ -157,24 +134,14 @@ contract PaymentFactory {
         } else {
             paymentContract  = address(new SweepERC20Payment{salt: recieptHash}(merchant, proof, amount, ERC20(currency), address(this)));
         }
-        // Create a reciept
-        if (lastPaymentAddress == paymentContract) {
-            bytes32 hash = keccak256(abi.encodePacked(block.number, paymentContract));
-            Receipt.mint(proof, uint256(hash), recieptHash);
-        }
-    }
-
-    /// @notice Used by the sweeper contracts to notify the payments contract that it has succesfully sweeped the funds. The payments will then issue a NFT reciept to the buyer.
-    function markSuccussfulTransfer () public {
-        lastPaymentAddress = msg.sender;
     }
 
     /// @notice this does a batched call to `processPayment`
-    /// @param merchant The merchant's address which the funds get sent to
-    /// @param proof The address that the receipt or the refund will be sent to
-    /// @param amount The amount the customer is paying
-    /// @param currency The address of the ERC20 that is being used as payement. If that currency is Ether then use zero address `0x0000000000000000000000000000000000000000`.
-    /// @param recieptHash The hash of the receipt
+    /// @param merchants The merchant's address which the funds get sent to
+    /// @param proofs The address that the receipt or the refund will be sent to
+    /// @param amounts The amount the customer is paying
+    /// @param currencys The address of the ERC20 that is being used as payement. If that currency is Ether then use zero address `0x0000000000000000000000000000000000000000`.
+    /// @param recieptHashes The hash of the receipt
     function batch(
         address payable[] calldata merchants,
         address payable[] calldata proofs,
@@ -186,20 +153,4 @@ contract PaymentFactory {
             processPayment(merchants[i], proofs[i], amounts[i], currencys[i], recieptHashes[i]);
         }
     }
-
-    function processRefund(
-        address merchant,
-        address proof,
-        address currency,
-        bytes32 listing
-    ) public {
-
-    }
-
-    function issueRefund(
-        address payout,
-        address currency,
-        uint256 amount,
-        bytes32 listing
-    ) external {}
 }
