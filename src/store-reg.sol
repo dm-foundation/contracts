@@ -3,10 +3,10 @@ pragma solidity ^0.8.21;
 
 import "openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "openzeppelin-contracts/contracts/access/Ownable.sol";
-import "delegatable-sol/contracts/Delegatable.sol";
+import "lib/delegatable-sol/contracts/Delegatable.sol";
 
 
-contract Store is ERC721Enumerable {
+contract Store is ERC721Enumerable, Delegatable {
     string public baseURI;
     mapping(uint256 => bytes32) public storeRootHash;
 
@@ -14,7 +14,7 @@ contract Store is ERC721Enumerable {
         string memory _name,
         string memory _symbol,
         string memory _baseURI
-    ) ERC721(_name, _symbol) {
+    ) ERC721(_name, _symbol) Delegatable("ShopReg", "1") {
         baseURI = _baseURI;
     }
 
@@ -36,5 +36,27 @@ contract Store is ERC721Enumerable {
             "NOT_AUTHORIZED"
         );
         storeRootHash[id] = hash;
+    }
+
+    function _msgSender()
+        internal
+        view
+        virtual
+        override(DelegatableCore, Context)
+        returns (address sender)
+    {
+        if (msg.sender == address(this)) {
+            bytes memory array = msg.data;
+            uint256 index = msg.data.length;
+            assembly {
+                sender := and(
+                    mload(add(array, index)),
+                    0xffffffffffffffffffffffffffffffffffffffff
+                )
+            }
+        } else {
+            sender = msg.sender;
+        }
+        return sender;
     }
 }
