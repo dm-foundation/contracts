@@ -9,6 +9,8 @@ import "lib/delegatable-sol/contracts/Delegatable.sol";
 contract Store is ERC721Enumerable, Delegatable {
     string public baseURI;
     mapping(uint256 => bytes32) public storeRootHash;
+    mapping(uint256 => string[]) public relays;
+    
 
     constructor(
         string memory _name,
@@ -36,6 +38,17 @@ contract Store is ERC721Enumerable, Delegatable {
             "NOT_AUTHORIZED"
         );
         storeRootHash[id] = hash;
+    }
+
+    function updateRelays(uint256 id, string[] memory _relays) public {
+        address owner = _ownerOf(id);
+        require(
+            msg.sender == owner ||
+            isApprovedForAll(owner, msg.sender) ||
+            msg.sender == getApproved(id),
+            "NOT_AUTHORIZED"
+        );
+        relays[id] = _relays;  
     }
 
     function _msgSender()
