@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.21;
 
-import "openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
 import "openzeppelin-contracts/contracts/access/Ownable.sol";
 import "lib/delegatable-sol/contracts/Delegatable.sol";
 
 
-contract Store is ERC721Enumerable, Delegatable {
+contract Store is ERC721, Delegatable {
     string public baseURI;
     mapping(uint256 => bytes32) public storeRootHash;
     mapping(uint256 => string[]) public relays;
